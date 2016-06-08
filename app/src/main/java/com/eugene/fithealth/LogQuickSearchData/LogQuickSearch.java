@@ -74,7 +74,6 @@ public class LogQuickSearch extends Model {
     }
 
     public static List<LogQuickSearch> all() {
-
         return LogQuickSearch.objects().all().orderBy("-date").toList();
     }
 
@@ -85,17 +84,14 @@ public class LogQuickSearch extends Model {
     }
 
     public static QuerySet<LogQuickSearch> objects() {
-
         return LogQuickSearch.objects(context(), LogQuickSearch.class);
     }
 
     /**
      * Get application context
-     *
      * @return
      */
     private static Context context() {
-
         return AppActivity.context();
     }
 }

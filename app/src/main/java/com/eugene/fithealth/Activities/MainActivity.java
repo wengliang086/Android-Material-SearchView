@@ -1,7 +1,6 @@
 package com.eugene.fithealth.Activities;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -49,14 +48,13 @@ import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Resources res;
     private InitiateSearch initiateSearch;
     private Toolbar toolbar;
     private TabLayout tabs;
-    private View line_divider, toolbar_shadow;
+    private View toolbar_shadow;
     private RelativeLayout view_search;
     private CardView card_search;
-    private ImageView image_search_back, clearSearch;
+    private ImageView clearSearch;
     private EditText edit_text_search;
     private ListView listView, listContainer;
     private LogQuickSearchAdapter logQuickSearchAdapter;
@@ -72,22 +70,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        res = this.getResources();
         initiateSearch = new InitiateSearch();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabs = (TabLayout) findViewById(R.id.tabs);
         view_search = (RelativeLayout) findViewById(R.id.view_search);
-        line_divider = findViewById(R.id.line_divider);
         toolbar_shadow = findViewById(R.id.toolbar_shadow);
         edit_text_search = (EditText) findViewById(R.id.edit_text_search);
         card_search = (CardView) findViewById(R.id.card_search);
-        image_search_back = (ImageView) findViewById(R.id.image_search_back);
         clearSearch = (ImageView) findViewById(R.id.clearSearch);
         listView = (ListView) findViewById(R.id.listView);
         listContainer = (ListView) findViewById(R.id.listContainer);
         marker_progress = (ProgressBar) findViewById(R.id.marker_progress);
         marker_progress.getIndeterminateDrawable().setColorFilter(Color.parseColor("#FFFFFF"),//Pink color
-            android.graphics.PorterDuff.Mode.MULTIPLY);
+                android.graphics.PorterDuff.Mode.MULTIPLY);
         logQuickSearchAdapter = new LogQuickSearchAdapter(this, 0, LogQuickSearch.all());
         mItem = new ArrayList<>();
         searchAdapter = new SearchAdapter(this, mItem);
@@ -95,15 +90,15 @@ public class MainActivity extends AppCompatActivity {
         listContainer.setAdapter(searchAdapter);
         set = new HashSet<>();
         mFatSecretSearch = new FatSecretSearchItem();
-        SetTypeFace();
-        InitiateToolbarTabs();
+        SetTypeFace();// 设置字体
+        InitiateToolbarTabs();// 初始化Toolbar和Tabs
         InitiateSearch();
         HandleSearch();
         IsAdapterEmpty();
     }
 
     private void InitiateToolbarTabs() {
-        toolbar.setTitleTextColor(res.getColor(R.color.text_color));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.text_color));
         toolbar.setNavigationIcon(R.mipmap.ic_menu);
         toolbar.inflateMenu(R.menu.menu_main);
         tabs.setTabTextColors(Color.parseColor("#906D6D6D"), Color.parseColor("#6D6D6D"));
@@ -122,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem) {
                     case R.id.action_search:
                         IsAdapterEmpty();
-                        initiateSearch.handleToolBar(MainActivity.this, card_search, toolbar, view_search, listView, edit_text_search, line_divider);
+                        initiateSearch.handleToolBar(MainActivity.this, card_search, toolbar, view_search, listView, edit_text_search);
                         break;
                     default:
                         break;
@@ -167,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        // 清空按钮操作（1、显示列表，2、显示软键盘，等等）
         clearSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void HandleSearch() {
-        image_search_back.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.image_search_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initiateSearch.handleToolBar(MainActivity.this, card_search, toolbar, view_search, listView, edit_text_search, line_divider);
+                initiateSearch.handleToolBar(MainActivity.this, card_search, toolbar, view_search, listView, edit_text_search);
                 listContainer.setVisibility(View.GONE);
                 toolbar_shadow.setVisibility(View.VISIBLE);
                 clearItems();
@@ -231,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void IsAdapterEmpty() {
+        View line_divider = findViewById(R.id.line_divider);
         if (logQuickSearchAdapter.getCount() == 0) {
             line_divider.setVisibility(View.GONE);
         } else {
@@ -238,6 +235,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 设置字体
+     */
     private void SetTypeFace() {
         Typeface roboto_regular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         edit_text_search.setTypeface(roboto_regular);
@@ -246,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Handle FatSecret Search
      */
-
     private void clearItems() {
         listContainer.setVisibility(View.GONE);
         mItem.clear();
@@ -284,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 String food_id = food_items.getString("food_id");
                                 mItem.add(new Item(food_name, row[1].substring(1),
-                                    "" + brand, food_id));
+                                        "" + brand, food_id));
                             }
                         }
                     }

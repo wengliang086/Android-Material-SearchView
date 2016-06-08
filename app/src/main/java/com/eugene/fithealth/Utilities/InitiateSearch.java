@@ -20,16 +20,16 @@ import com.eugene.fithealth.R;
 
 public class InitiateSearch {
 
-    public static void handleToolBar(final Context context, final CardView search, Toolbar toolbarMain, final View view, final ListView listView, final EditText editText, final View line_divider) {
+    public static void handleToolBar(final Context context, final CardView search, Toolbar toolbarMain, final View view, final ListView listView, final EditText editText) {
         final Animation fade_in = AnimationUtils.loadAnimation(context.getApplicationContext(), android.R.anim.fade_in);
         final Animation fade_out = AnimationUtils.loadAnimation(context.getApplicationContext(), android.R.anim.fade_out);
         if (search.getVisibility() == View.VISIBLE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 final Animator animatorHide = ViewAnimationUtils.createCircularReveal(search,
-                    search.getWidth() - (int) convertDpToPixel(56, context),
-                    (int) convertDpToPixel(23, context),
-                    (float) Math.hypot(search.getWidth(), search.getHeight()),
-                    0);
+                        search.getWidth() - (int) convertDpToPixel(56, context),
+                        (int) convertDpToPixel(23, context),
+                        (float) Math.hypot(search.getWidth(), search.getHeight()),
+                        0);
                 animatorHide.addListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
@@ -75,10 +75,10 @@ public class InitiateSearch {
             toolbarMain.setNavigationIcon(null);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 final Animator animator = ViewAnimationUtils.createCircularReveal(search,
-                    search.getWidth() - (int) convertDpToPixel(56, context),
-                    (int) convertDpToPixel(23, context),
-                    0,
-                    (float) Math.hypot(search.getWidth(), search.getHeight()));
+                        search.getWidth() - (int) convertDpToPixel(56, context),
+                        (int) convertDpToPixel(23, context),
+                        0,
+                        (float) Math.hypot(search.getWidth(), search.getHeight()));
                 animator.addListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
